@@ -24,8 +24,13 @@ export function CartProvider({
     return {
       cart,
 
-      addItem: ({ sku, quantity, unitPrice }) => {
-        const updatedCart = addItemToCart.execute({ sku, quantity, unitPrice });
+      addItem: ({ sku, quantity, unitPriceAmount, currency }) => {
+        const updatedCart = addItemToCart.execute({
+          sku,
+          quantity,
+          unitPriceAmount,
+          currency,
+        });
         setCart(updatedCart);
       },
 
@@ -35,7 +40,10 @@ export function CartProvider({
       },
 
       changeQuantity: ({ sku, quantity }) => {
-        const updatedCart = changeItemQuantity.execute({ sku, quantity });
+        const updatedCart = changeItemQuantity.execute({
+          sku,
+          quantity,
+        });
         setCart(updatedCart);
       },
     };
