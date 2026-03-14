@@ -1,11 +1,14 @@
-export class AddItemToCart {
+export class RemoveItemFromCart {
   constructor(cartRepository) {
+    if (!cartRepository) {
+      throw new Error("cartRepository is required");
+    }
     this.cartRepository = cartRepository;
   }
 
-  execute({ sku, quantity, unitPrice }) {
+  execute({ sku }) {
     const cart = this.cartRepository.getCart();
-    const updatedCart = cart.addItem(sku, quantity, unitPrice);
+    const updatedCart = cart.removeItem(sku);
     this.cartRepository.save(updatedCart);
     return updatedCart;
   }

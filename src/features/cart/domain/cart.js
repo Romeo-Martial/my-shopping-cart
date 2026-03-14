@@ -1,12 +1,14 @@
-import { CartId } from "./value-objects/cart-id";
+import { CartId } from "./value-objects/cart-id.js";
+import { CartLine } from "./cart-line.js";
+import { Money } from "./value-objects/money.js";
 
-class Cart {
+export class Cart {
   constructor(id, lines) {
     if (!(id instanceof CartId)) {
       throw new Error("id must be of type CartId");
     }
-    lines.forEach((elt) => {
-      if (!(elt instanceof CartLine)) {
+    lines.forEach((line) => {
+      if (!(line instanceof CartLine)) {
         throw new Error("lines must be an array of CartLine");
       }
     });
@@ -62,6 +64,10 @@ class Cart {
   }
 
   getSubtotal() {
+    if (this.lines.length === 0) {
+      return new Money(0, "EUR");
+    }
+
     return this.lines.reduce(
       (total, line) => total.add(line.getSubtotal()),
       new Money(0, this.lines[0].unitPrice.currency),

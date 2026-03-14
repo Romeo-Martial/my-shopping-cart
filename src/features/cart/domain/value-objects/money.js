@@ -1,3 +1,5 @@
+import { Quantity } from "./quantity.js";
+
 export class Money {
   constructor(amount, currency) {
     if (!Number.isInteger(amount)) {

@@ -1,8 +1,8 @@
-import { Money } from "./value-objects/money";
-import { Quantity } from "./value-objects/quantity";
-import { Sku } from "./value-objects/sku";
+import { Money } from "./value-objects/money.js";
+import { Quantity } from "./value-objects/quantity.js";
+import { Sku } from "./value-objects/sku.js";
 
-class CartLine {
+export class CartLine {
   constructor(sku, quantity, unitPrice) {
     if (!(sku instanceof Sku)) {
       throw new Error("sku should be of type Sku");
@@ -31,6 +31,6 @@ class CartLine {
     if (!(newQuantity instanceof Quantity)) {
       throw new Error("Argument must be of type Quantity");
     }
-    new CartLine(this.sku, newQuantity, this.unitPrice);
+    return new CartLine(this.sku, newQuantity, this.unitPrice);
   }
 }
