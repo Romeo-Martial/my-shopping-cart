@@ -1,7 +1,4 @@
 import { CartId } from "../features/cart/domain/value-objects/cart-id.js";
-import { Sku } from "../features/cart/domain/value-objects/sku.js";
-import { Quantity } from "../features/cart/domain/value-objects/quantity.js";
-import { Money } from "../features/cart/domain/value-objects/money.js";
 import { Cart } from "../features/cart/domain/cart.js";
 
 import { InMemoryCartRepository } from "../features/cart/infrastructure/in-memory-cart-repository.js";
@@ -14,14 +11,16 @@ const repo = new InMemoryCartRepository(emptyCart);
 
 const addItem = new AddItemToCart(repo);
 
-const sku = new Sku("SKU-001");
-const quantity = new Quantity(1);
-const price = new Money(1999, "EUR");
+const sku = "SKU-001";
+const quantity = 1;
+const price = 1999;
+const currency = "EUR";
 
 const updatedCart = addItem.execute({
   sku,
   quantity,
-  unitPrice: price,
+  unitPriceAmount: price,
+  currency,
 });
 
 console.log(updatedCart);

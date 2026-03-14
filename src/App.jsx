@@ -1,41 +1,39 @@
-import { CartProvider } from "./features/cart/ui/context/cart-context";
-import { useCart } from "./features/cart/ui/hooks/use-cart";
-import { createCartDependencies } from "./application/composition/cart";
+import { createCatalogDependencies } from "./application/composition/catalog";
+import { useProducts } from "./features/catalog/ui/hooks/use-products";
 
-import { Sku } from "./features/cart/domain/value-objects/sku";
-import { Quantity } from "./features/cart/domain/value-objects/quantity";
-import { Money } from "./features/cart/domain/value-objects/money";
+const catalogDeps = createCatalogDependencies();
 
-const cartDeps = createCartDependencies();
+function ProductList() {
+  const { products, isLoading, error } = useProducts(catalogDeps.getProducts);
 
-function CartDemo() {
-  const { cart, addItem, removeItem, changeQuantity } = useCart();
+  if (isLoading) {
+    return <p>Loading products...</p>;
+  }
 
-  const handleAdd = () => {
-    addItem({
-      sku: new Sku("SKU-001"),
-      quantity: new Quantity(1),
-      unitPrice: new Money(1999, "EUR"),
-    });
-  };
+  if (error) {
+    return <p>Failed to load products: {error.message}</p>;
+  }
 
   return (
-    <div>
-      <h1>Cart Demo</h1>
-      <p>Total items: {cart.getTotalItems()}</p>
-      <p>
-        Subtotal: {cart.getSubtotal().amount} {cart.getSubtotal().currency}
-      </p>
-
-      <button onClick={handleAdd}>Add item</button>
-    </div>
+    <ul>
+      {products.map((product) => (
+        <li key={product.id.value}>
+          <img
+            src={product.imageUrl.value}
+            alt={product.name.value}
+            width="80"
+          />
+          <h3>{product.name.value}</h3>
+          <p>
+            {product.price.amount / 100} {product.price.currency}
+          </p>
+          <p>{product.category.value}</p>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export default function App() {
-  return (
-    <CartProvider {...cartDeps}>
-      <CartDemo />
-    </CartProvider>
-  );
+  return <ProductList />;
 }
