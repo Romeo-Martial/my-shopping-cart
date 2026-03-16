@@ -1,7 +1,7 @@
-import { GetProducts } from "../../features/catalog/application/use-cases/get-products";
-import { GetProductById } from "../../features/catalog/application/use-cases/get-product-by-id";
-import { FakeStoreHttpClient } from "../../features/catalog/infrastructure/fake-store-http-client";
-import { FakeStoreProductRepository } from "../../features/catalog/infrastructure/fake-store-product-repository";
+import { GetProducts } from "../../features/catalog/application/useCases/getProducts";
+import { GetProductById } from "../../features/catalog/application/useCases/getProductById";
+import { FakeStoreHttpClient } from "../../features/catalog/infrastructure/fakeStoreHttpClient";
+import { FakeStoreProductRepository } from "../../features/catalog/infrastructure/fakeStoreProductRepository";
 
 export function createCatalogDependencies() {
   const httpClient = new FakeStoreHttpClient("https://fakestoreapi.com");

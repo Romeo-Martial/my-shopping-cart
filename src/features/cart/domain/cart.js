@@ -1,6 +1,6 @@
-import { CartId } from "./value-objects/cart-id.js";
-import { CartLine } from "./cart-line.js";
-import { Money } from "./value-objects/money.js";
+import { CartId } from "./valueObjects/cartId.js";
+import { CartLine } from "./cartLine.js";
+import { Money } from "./valueObjects/money.js";
 
 export class Cart {
   constructor(id, lines) {

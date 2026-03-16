@@ -1,6 +1,7 @@
-import { Sku } from "../../domain/value-objects/sku";
+import { Sku } from "../../domain/valueObjects/sku";
+import { Quantity } from "../../domain/valueObjects/quantity";
 
-export class RemoveItemFromCart {
+export class ChangeItemQuantity {
   constructor(cartRepository) {
     if (!cartRepository) {
       throw new Error("cartRepository is required");
@@ -9,12 +10,13 @@ export class RemoveItemFromCart {
     this.cartRepository = cartRepository;
   }
 
-  execute({ sku }) {
+  execute({ sku, quantity }) {
     const cart = this.cartRepository.getCart();
 
     const domainSku = new Sku(sku);
+    const domainQuantity = new Quantity(quantity);
 
-    const updatedCart = cart.removeItem(domainSku);
+    const updatedCart = cart.changeItemQuantity(domainSku, domainQuantity);
 
     this.cartRepository.save(updatedCart);
 

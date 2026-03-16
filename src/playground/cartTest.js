@@ -1,8 +1,8 @@
-import { CartId } from "../features/cart/domain/value-objects/cart-id.js";
+import { CartId } from "../features/cart/domain/valueObjects/cartId.js";
 import { Cart } from "../features/cart/domain/cart.js";
 
-import { InMemoryCartRepository } from "../features/cart/infrastructure/in-memory-cart-repository.js";
-import { AddItemToCart } from "../features/cart/application/use-cases/add-item-to-cart.js";
+import { InMemoryCartRepository } from "../features/cart/infrastructure/inMemoryCartRepository.js";
+import { AddItemToCart } from "../features/cart/application/useCases/addItemToCart.js";
 
 const cartId = new CartId("123e4567-e89b-12d3-a456-426614174000");
 const emptyCart = new Cart(cartId, []);

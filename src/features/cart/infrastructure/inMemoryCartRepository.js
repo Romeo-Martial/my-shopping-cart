@@ -1,4 +1,4 @@
-import { CartRepository } from "../application/ports/cart-repository.js";
+import { CartRepository } from "../application/ports/cartRepository.js";
 import { Cart } from "../domain/cart.js";
 
 export class InMemoryCartRepository extends CartRepository {

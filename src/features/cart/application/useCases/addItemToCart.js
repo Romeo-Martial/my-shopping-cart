@@ -1,6 +1,6 @@
-import { Sku } from "../../domain/value-objects/sku";
-import { Quantity } from "../../domain/value-objects/quantity";
-import { Money } from "../../domain/value-objects/money";
+import { Sku } from "../../domain/valueObjects/sku";
+import { Quantity } from "../../domain/valueObjects/quantity";
+import { Money } from "../../domain/valueObjects/money";
 
 export class AddItemToCart {
   constructor(cartRepository) {

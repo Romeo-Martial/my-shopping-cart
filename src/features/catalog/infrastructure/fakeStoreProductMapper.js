@@ -1,9 +1,9 @@
 import { Product } from "../domain/product";
-import { ProductId } from "../domain/value-objects/product-id";
-import { ProductName } from "../domain/value-objects/product-name";
-import { ProductImageUrl } from "../domain/value-objects/product-image-url";
-import { ProductCategory } from "../domain/value-objects/product-category";
-import { Money } from "../../cart/domain/value-objects/money";
+import { ProductId } from "../domain/valueObjects/productId";
+import { ProductName } from "../domain/valueObjects/productName";
+import { ProductImageUrl } from "../domain/valueObjects/productImageUrl";
+import { ProductCategory } from "../domain/valueObjects/productCategory";
+import { Money } from "../../cart/domain/valueObjects/money";
 
 export class FakeStoreProductMapper {
   static toDomain(dto) {

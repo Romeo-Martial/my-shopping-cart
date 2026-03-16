@@ -1,6 +1,6 @@
-import { ProductRepository } from "../application/ports/product-repository";
-import { ProductId } from "../domain/value-objects/product-id";
-import { FakeStoreProductMapper } from "./fake-store-product-mapper";
+import { ProductRepository } from "../application/ports/productRepository";
+import { ProductId } from "../domain/valueObjects/productId";
+import { FakeStoreProductMapper } from "./fakeStoreProductMapper";
 
 export class FakeStoreProductRepository extends ProductRepository {
   constructor(httpClient) {

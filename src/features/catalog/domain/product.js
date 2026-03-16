@@ -1,8 +1,8 @@
-import { ProductId } from "./value-objects/product-id";
-import { ProductName } from "./value-objects/product-name";
-import { ProductImageUrl } from "./value-objects/product-image-url";
-import { ProductCategory } from "./value-objects/product-category";
-import { Money } from "../../cart/domain/value-objects/money";
+import { ProductId } from "./valueObjects/productId";
+import { ProductName } from "./valueObjects/productName";
+import { ProductImageUrl } from "./valueObjects/productImageUrl";
+import { ProductCategory } from "./valueObjects/productCategory";
+import { Money } from "../../cart/domain/valueObjects/money";
 
 export class Product {
   constructor({ id, name, price, imageUrl, category }) {
