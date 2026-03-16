@@ -9,10 +9,10 @@ export function createCheckoutDependencies() {
   const checkoutRepository = new InMemoryCheckoutRepository();
 
   return {
-    startCheckout: new StartCheckout(checkoutRepository),
-    getCheckout: new GetCheckout(checkoutRepository),
-    setShippingAddress: new SetShippingAddress(checkoutRepository),
-    setPaymentMethod: new SetPaymentMethod(checkoutRepository),
-    submitCheckout: new SubmitCheckout(checkoutRepository),
+    startCheckoutUseCase: new StartCheckout(checkoutRepository),
+    getCheckoutUseCase: new GetCheckout(checkoutRepository),
+    setShippingAddressUseCase: new SetShippingAddress(checkoutRepository),
+    setPaymentMethodUseCase: new SetPaymentMethod(checkoutRepository),
+    submitCheckoutUseCase: new SubmitCheckout(checkoutRepository),
   };
 }
