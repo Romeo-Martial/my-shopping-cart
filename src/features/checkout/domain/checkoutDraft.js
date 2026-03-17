@@ -1,8 +1,8 @@
-import { CheckoutId } from "./value-objects/CheckoutId";
-import { ShippingAddress } from "./value-objects/ShippingAddress";
-import { PaymentMethod } from "./value-objects/PaymentMethod";
-import { CheckoutStatus } from "./value-objects/CheckoutStatus";
-import { CartId } from "../../cart/domain/value-objects/cart-id";
+import { CheckoutId } from "./valueObjects/checkoutId";
+import { ShippingAddress } from "./valueObjects/shippingAddress";
+import { PaymentMethod } from "./valueObjects/paymentMethod";
+import { CheckoutStatus } from "./valueObjects/checkoutStatus";
+import { CartId } from "../../cart/domain/valueObjects/cartId";
 
 export class CheckoutDraft {
   constructor({
@@ -13,26 +13,28 @@ export class CheckoutDraft {
     status = new CheckoutStatus("draft"),
   }) {
     if (!(id instanceof CheckoutId)) {
-      throw new Error("id must be CheckoutId");
+      throw new Error("id must be of type CheckoutId");
     }
 
     if (!(cartId instanceof CartId)) {
-      throw new Error("cartId must be CartId");
+      throw new Error("cartId must be of type CartId");
     }
 
     if (
       shippingAddress !== null &&
       !(shippingAddress instanceof ShippingAddress)
     ) {
-      throw new Error("shippingAddress must be ShippingAddress or null");
+      throw new Error(
+        "shippingAddress must be of type ShippingAddress or null",
+      );
     }
 
     if (paymentMethod !== null && !(paymentMethod instanceof PaymentMethod)) {
-      throw new Error("paymentMethod must be PaymentMethod or null");
+      throw new Error("paymentMethod must be of type PaymentMethod or null");
     }
 
     if (!(status instanceof CheckoutStatus)) {
-      throw new Error("status must be CheckoutStatus");
+      throw new Error("status must be of type CheckoutStatus");
     }
 
     this.id = id;

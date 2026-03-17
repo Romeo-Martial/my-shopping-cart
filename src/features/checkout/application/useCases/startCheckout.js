@@ -1,6 +1,6 @@
 import { CheckoutDraft } from "../../domain/checkoutDraft";
-import { CheckoutId } from "../../domain/value-objects/checkoutId";
-import { CartId } from "../../../cart/domain/value-objects/cartId";
+import { CheckoutId } from "../../domain/valueObjects/checkoutId";
+import { CartId } from "../../../cart/domain/valueObjects/cartId";
 
 export class StartCheckout {
   constructor(checkoutRepository) {

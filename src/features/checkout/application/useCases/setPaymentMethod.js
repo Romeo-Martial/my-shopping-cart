@@ -1,4 +1,4 @@
-import { PaymentMethod } from "../../domain/value-objects/PaymentMethod";
+import { PaymentMethod } from "../../domain/valueObjects/paymentMethod";
 
 export class SetPaymentMethod {
   constructor(checkoutRepository) {

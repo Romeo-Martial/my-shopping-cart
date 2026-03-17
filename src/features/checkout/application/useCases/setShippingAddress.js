@@ -1,4 +1,4 @@
-import { ShippingAddress } from "../../domain/value-objects/ShippingAddress";
+import { ShippingAddress } from "../../domain/valueObjects/shippingAddress";
 
 export class SetShippingAddress {
   constructor(checkoutRepository) {
