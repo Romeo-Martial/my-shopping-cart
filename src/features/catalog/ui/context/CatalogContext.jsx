@@ -12,14 +12,20 @@ export function CatalogProvider({ children, getProducts }) {
   const [error, setError] = useState(null);
 
   const loadProducts = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+    setIsLoading(true);
 
+    try {
       const result = await getProducts.execute();
-      setProducts(result);
-    } catch (err) {
-      setError(err);
+
+      if (result.isFailure()) {
+        setError(result.error);
+        setProducts([]);
+        return result;
+      }
+
+      setError(null);
+      setProducts(result.value);
+      return result;
     } finally {
       setIsLoading(false);
     }
