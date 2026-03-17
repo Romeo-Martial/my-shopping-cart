@@ -1,3 +1,5 @@
+import { Result } from "../../../_shared/domain/result";
+import { DomainError } from "../../../_shared/domain/domainError";
 import { Sku } from "../../domain/valueObjects/sku";
 import { Quantity } from "../../domain/valueObjects/quantity";
 
@@ -11,15 +13,21 @@ export class ChangeItemQuantity {
   }
 
   execute({ sku, quantity }) {
-    const cart = this.cartRepository.getCart();
+    try {
+      const cart = this.cartRepository.getCart();
 
-    const domainSku = new Sku(sku);
-    const domainQuantity = new Quantity(quantity);
+      const domainSku = new Sku(sku);
+      const domainQuantity = new Quantity(quantity);
 
-    const updatedCart = cart.changeItemQuantity(domainSku, domainQuantity);
+      const updatedCart = cart.changeItemQuantity(domainSku, domainQuantity);
 
-    this.cartRepository.save(updatedCart);
+      this.cartRepository.save(updatedCart);
 
-    return updatedCart;
+      return Result.success(updatedCart);
+    } catch (err) {
+      return Result.failure(
+        new DomainError("CHANGE_ITEM_QUANTITY_FAILED", err.message),
+      );
+    }
   }
 }

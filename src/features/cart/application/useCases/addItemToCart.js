@@ -1,3 +1,5 @@
+import { Result } from "../../../_shared/domain/result";
+import { DomainError } from "../../../_shared/domain/domainError";
 import { Sku } from "../../domain/valueObjects/sku";
 import { Quantity } from "../../domain/valueObjects/quantity";
 import { Money } from "../../domain/valueObjects/money";
@@ -12,20 +14,26 @@ export class AddItemToCart {
   }
 
   execute({ sku, quantity, unitPriceAmount, currency }) {
-    const cart = this.cartRepository.getCart();
+    try {
+      const cart = this.cartRepository.getCart();
 
-    const domainSku = new Sku(sku);
-    const domainQuantity = new Quantity(quantity);
-    const domainUnitPrice = new Money(unitPriceAmount, currency);
+      const domainSku = new Sku(sku);
+      const domainQuantity = new Quantity(quantity);
+      const domainUnitPrice = new Money(unitPriceAmount, currency);
 
-    const updatedCart = cart.addItem(
-      domainSku,
-      domainQuantity,
-      domainUnitPrice,
-    );
+      const updatedCart = cart.addItem(
+        domainSku,
+        domainQuantity,
+        domainUnitPrice,
+      );
 
-    this.cartRepository.save(updatedCart);
+      this.cartRepository.save(updatedCart);
 
-    return updatedCart;
+      return Result.success(updatedCart);
+    } catch (err) {
+      return Result.failure(
+        new DomainError("ADD_ITEM_TO_CART_FAILED", err.message),
+      );
+    }
   }
 }

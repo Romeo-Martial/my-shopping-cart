@@ -18,36 +18,69 @@ export function CartProvider({
     throw new Error("CartProvider requires all cart use cases");
   }
 
-  const [cart, setCart] = useState(() => getCart.execute());
+  const initialCartResult = getCart.execute();
+
+  const [cart, setCart] = useState(
+    initialCartResult.isSuccess() ? initialCartResult.value : null,
+  );
+
+  const [error, setError] = useState(
+    initialCartResult.isFailure() ? initialCartResult.error : null,
+  );
 
   const value = useMemo(() => {
     return {
       cart,
+      error,
 
       addItem: ({ sku, quantity, unitPriceAmount, currency }) => {
-        const updatedCart = addItemToCart.execute({
+        const result = addItemToCart.execute({
           sku,
           quantity,
           unitPriceAmount,
           currency,
         });
-        setCart(updatedCart);
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
+        }
+
+        setError(null);
+        setCart(result.value);
+        return result;
       },
 
       removeItem: ({ sku }) => {
-        const updatedCart = removeItemFromCart.execute({ sku });
-        setCart(updatedCart);
+        const result = removeItemFromCart.execute({ sku });
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
+        }
+
+        setError(null);
+        setCart(result.value);
+        return result;
       },
 
       changeQuantity: ({ sku, quantity }) => {
-        const updatedCart = changeItemQuantity.execute({
+        const result = changeItemQuantity.execute({
           sku,
           quantity,
         });
-        setCart(updatedCart);
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
+        }
+
+        setError(null);
+        setCart(result.value);
+        return result;
       },
     };
-  }, [cart, addItemToCart, removeItemFromCart, changeItemQuantity]);
+  }, [cart, error, addItemToCart, removeItemFromCart, changeItemQuantity]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
