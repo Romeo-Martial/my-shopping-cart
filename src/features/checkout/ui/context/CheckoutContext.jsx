@@ -20,16 +20,16 @@ export function CheckoutProvider({
     throw new Error("CheckoutProvider requires all checkout use cases");
   }
 
-  const [checkout, setCheckout] = useState(() => {
-    try {
-      return getCheckoutUseCase.execute();
-    } catch {
-      return null;
-    }
-  });
+  const initialCheckoutResult = getCheckoutUseCase.execute();
+
+  const [checkout, setCheckout] = useState(
+    initialCheckoutResult.isSuccess() ? initialCheckoutResult.value : null,
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(
+    initialCheckoutResult.isFailure() ? initialCheckoutResult.error : null,
+  );
 
   const value = useMemo(() => {
     return {
@@ -38,63 +38,64 @@ export function CheckoutProvider({
       error,
 
       startCheckout: ({ checkoutId, cartId }) => {
-        try {
-          setError(null);
-          const createdCheckout = startCheckoutUseCase.execute({
-            checkoutId,
-            cartId,
-          });
-          setCheckout(createdCheckout);
-          return createdCheckout;
-        } catch (err) {
-          setError(err);
-          throw err;
+        const result = startCheckoutUseCase.execute({ checkoutId, cartId });
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
         }
+
+        setError(null);
+        setCheckout(result.value);
+        return result;
       },
 
       setShippingAddress: ({ fullName, line1, city, postalCode, country }) => {
-        try {
-          setError(null);
-          const updatedCheckout = setShippingAddressUseCase.execute({
-            fullName,
-            line1,
-            city,
-            postalCode,
-            country,
-          });
-          setCheckout(updatedCheckout);
-          return updatedCheckout;
-        } catch (err) {
-          setError(err);
-          throw err;
+        const result = setShippingAddressUseCase.execute({
+          fullName,
+          line1,
+          city,
+          postalCode,
+          country,
+        });
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
         }
+
+        setError(null);
+        setCheckout(result.value);
+        return result;
       },
 
       setPaymentMethod: ({ paymentMethod }) => {
-        try {
-          setError(null);
-          const updatedCheckout = setPaymentMethodUseCase.execute({
-            paymentMethod,
-          });
-          setCheckout(updatedCheckout);
-          return updatedCheckout;
-        } catch (err) {
-          setError(err);
-          throw err;
+        const result = setPaymentMethodUseCase.execute({ paymentMethod });
+
+        if (result.isFailure()) {
+          setError(result.error);
+          return result;
         }
+
+        setError(null);
+        setCheckout(result.value);
+        return result;
       },
 
       submitCheckout: async () => {
-        try {
-          setError(null);
-          setIsSubmitting(true);
+        setIsSubmitting(true);
 
-          const submittedCheckout = submitCheckoutUseCase.execute();
-          setCheckout(submittedCheckout);
-          return submittedCheckout;
-        } catch (err) {
-          setError(err);
-          throw err;
+        try {
+          const result = submitCheckoutUseCase.execute();
+
+          if (result.isFailure()) {
+            setError(result.error);
+            return result;
+          }
+
+          setError(null);
+          setCheckout(result.value);
+          return result;
         } finally {
           setIsSubmitting(false);
         }

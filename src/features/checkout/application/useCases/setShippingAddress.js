@@ -1,3 +1,5 @@
+import { Result } from "../../../_shared/domain/result";
+import { DomainError } from "../../../_shared/domain/domainError";
 import { ShippingAddress } from "../../domain/valueObjects/shippingAddress";
 
 export class SetShippingAddress {
@@ -10,20 +12,26 @@ export class SetShippingAddress {
   }
 
   execute({ fullName, line1, city, postalCode, country }) {
-    const checkoutDraft = this.checkoutRepository.getCurrent();
+    try {
+      const checkoutDraft = this.checkoutRepository.getCurrent();
 
-    const shippingAddress = new ShippingAddress({
-      fullName,
-      line1,
-      city,
-      postalCode,
-      country,
-    });
+      const shippingAddress = new ShippingAddress({
+        fullName,
+        line1,
+        city,
+        postalCode,
+        country,
+      });
 
-    const updatedCheckout = checkoutDraft.setShippingAddress(shippingAddress);
+      const updatedCheckout = checkoutDraft.setShippingAddress(shippingAddress);
 
-    this.checkoutRepository.save(updatedCheckout);
+      this.checkoutRepository.save(updatedCheckout);
 
-    return updatedCheckout;
+      return Result.success(updatedCheckout);
+    } catch (err) {
+      return Result.failure(
+        new DomainError("SET_SHIPPING_ADDRESS_FAILED", err.message),
+      );
+    }
   }
 }

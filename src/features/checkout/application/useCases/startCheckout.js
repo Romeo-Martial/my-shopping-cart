@@ -1,3 +1,5 @@
+import { Result } from "../../../_shared/domain/result";
+import { DomainError } from "../../../_shared/domain/domainError";
 import { CheckoutDraft } from "../../domain/checkoutDraft";
 import { CheckoutId } from "../../domain/valueObjects/checkoutId";
 import { CartId } from "../../../cart/domain/valueObjects/cartId";
@@ -12,16 +14,22 @@ export class StartCheckout {
   }
 
   execute({ checkoutId, cartId }) {
-    const domainCheckoutId = new CheckoutId(checkoutId);
-    const domainCartId = new CartId(cartId);
+    try {
+      const domainCheckoutId = new CheckoutId(checkoutId);
+      const domainCartId = new CartId(cartId);
 
-    const checkoutDraft = new CheckoutDraft({
-      id: domainCheckoutId,
-      cartId: domainCartId,
-    });
+      const checkoutDraft = new CheckoutDraft({
+        id: domainCheckoutId,
+        cartId: domainCartId,
+      });
 
-    this.checkoutRepository.save(checkoutDraft);
+      this.checkoutRepository.save(checkoutDraft);
 
-    return checkoutDraft;
+      return Result.success(checkoutDraft);
+    } catch (err) {
+      return Result.failure(
+        new DomainError("CHECKOUT_START_FAILED", err.message),
+      );
+    }
   }
 }

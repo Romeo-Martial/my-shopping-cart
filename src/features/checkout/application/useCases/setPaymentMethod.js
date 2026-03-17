@@ -1,3 +1,5 @@
+import { Result } from "../../../_shared/domain/result";
+import { DomainError } from "../../../_shared/domain/domainError";
 import { PaymentMethod } from "../../domain/valueObjects/paymentMethod";
 
 export class SetPaymentMethod {
@@ -10,14 +12,21 @@ export class SetPaymentMethod {
   }
 
   execute({ paymentMethod }) {
-    const checkoutDraft = this.checkoutRepository.getCurrent();
+    try {
+      const checkoutDraft = this.checkoutRepository.getCurrent();
 
-    const domainPaymentMethod = new PaymentMethod(paymentMethod);
+      const domainPaymentMethod = new PaymentMethod(paymentMethod);
 
-    const updatedCheckout = checkoutDraft.setPaymentMethod(domainPaymentMethod);
+      const updatedCheckout =
+        checkoutDraft.setPaymentMethod(domainPaymentMethod);
 
-    this.checkoutRepository.save(updatedCheckout);
+      this.checkoutRepository.save(updatedCheckout);
 
-    return updatedCheckout;
+      return Result.success(updatedCheckout);
+    } catch (err) {
+      return Result.failure(
+        new DomainError("SET_PAYMENT_METHOD_FAILED", err.message),
+      );
+    }
   }
 }
