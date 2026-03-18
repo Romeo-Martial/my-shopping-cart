@@ -8,11 +8,15 @@ import { RemoveItemFromCart } from "../../features/cart/application/useCases/rem
 import { ChangeItemQuantity } from "../../features/cart/application/useCases/changeItemQuantity";
 
 export function createCartDependencies() {
-  const cart = new Cart(new CartId("123e4567-e89b-12d3-a456-426614174000"), []);
+  const initialCart = new Cart(
+    new CartId("123e4567-e89b-12d3-a456-426614174111"),
+    [],
+  );
 
-  const cartRepository = new InMemoryCartRepository(cart);
+  const cartRepository = new InMemoryCartRepository(initialCart);
 
   return {
+    cartRepository,
     getCart: new GetCart(cartRepository),
     addItemToCart: new AddItemToCart(cartRepository),
     removeItemFromCart: new RemoveItemFromCart(cartRepository),
