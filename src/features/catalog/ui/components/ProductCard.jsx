@@ -1,17 +1,37 @@
+import "./productCard.css";
+
+function formatPrice(price) {
+  return `${(price.amount / 100).toFixed(2)} ${price.currency}`;
+}
+
 export function ProductCard({ product, onAddToCart }) {
   return (
-    <article>
-      <img src={product.imageUrl.value} alt={product.name.value} width="120" />
+    <article className="product-card">
+      <div className="product-card__image-wrapper">
+        <img
+          className="product-card__image"
+          src={product.imageUrl.value}
+          alt={product.name.value}
+        />
+      </div>
 
-      <h3>{product.name.value}</h3>
+      <div className="product-card__body">
+        <p className="product-card__category">{product.category.value}</p>
 
-      <p>
-        {(product.price.amount / 100).toFixed(2)} {product.price.currency}
-      </p>
+        <h3 className="product-card__name">{product.name.value}</h3>
 
-      <p>{product.category.value}</p>
+        <div className="product-card__footer">
+          <p className="product-card__price">{formatPrice(product.price)}</p>
 
-      <button onClick={() => onAddToCart(product)}>Add to cart</button>
+          <button
+            type="button"
+            className="product-card__button"
+            onClick={() => onAddToCart(product)}
+          >
+            Add to cart
+          </button>
+        </div>
+      </div>
     </article>
   );
 }

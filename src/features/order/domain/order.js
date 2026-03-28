@@ -14,7 +14,7 @@ export class Order {
     status = new OrderStatus("placed"),
   }) {
     if (!(id instanceof OrderId)) {
-      throw new Error("id must be OrderId");
+      throw new Error("id must be of type OrderId");
     }
 
     if (!Array.isArray(lines) || lines.length === 0) {
@@ -28,11 +28,11 @@ export class Order {
     }
 
     if (!(shippingAddress instanceof ShippingAddress)) {
-      throw new Error("shippingAddress must be ShippingAddress");
+      throw new Error("shippingAddress must be of type ShippingAddress");
     }
 
     if (!(paymentMethod instanceof PaymentMethod)) {
-      throw new Error("paymentMethod must be PaymentMethod");
+      throw new Error("paymentMethod must be of type PaymentMethod");
     }
 
     if (!(status instanceof OrderStatus)) {

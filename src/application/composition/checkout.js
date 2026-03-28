@@ -1,4 +1,4 @@
-import { InMemoryCheckoutRepository } from "../../features/checkout/infrastructure/inMemoryCheckoutRepository";
+import { LocalStorageCheckoutRepository } from "../../features/checkout/infrastructure/localStorageCheckoutRepository";
 import { StartCheckout } from "../../features/checkout/application/useCases/startCheckout";
 import { GetCheckout } from "../../features/checkout/application/useCases/getCheckout";
 import { SetShippingAddress } from "../../features/checkout/application/useCases/setShippingAddress";
@@ -6,7 +6,7 @@ import { SetPaymentMethod } from "../../features/checkout/application/useCases/s
 import { SubmitCheckout } from "../../features/checkout/application/useCases/submitCheckout";
 
 export function createCheckoutDependencies() {
-  const checkoutRepository = new InMemoryCheckoutRepository();
+  const checkoutRepository = new LocalStorageCheckoutRepository();
 
   return {
     checkoutRepository,

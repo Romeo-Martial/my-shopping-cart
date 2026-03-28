@@ -1,4 +1,4 @@
-import { InMemoryOrderRepository } from "../../features/order/infrastructure/inMemoryOrderRepository";
+import { LocalStorageOrderRepository } from "../../features/order/infrastructure/localStorageOrderRepository";
 import { CreateOrderFromCheckout } from "../../features/order/application/useCases/createOrderFromCheckout";
 import { GetOrderById } from "../../features/order/application/useCases/getOrderById";
 import { MarkOrderPaid } from "../../features/order/application/useCases/markOrderPaid";
@@ -16,7 +16,7 @@ export function createOrderDependencies({
     throw new Error("checkoutRepository is required");
   }
 
-  const orderRepository = new InMemoryOrderRepository();
+  const orderRepository = new LocalStorageOrderRepository();
 
   return {
     orderRepository,

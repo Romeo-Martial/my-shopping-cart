@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 
 const CatalogContext = createContext(null);
 
@@ -11,7 +18,7 @@ export function CatalogProvider({ children, getProducts }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const loadProducts = async () => {
+  const loadProducts = useCallback(async () => {
     setIsLoading(true);
 
     try {
@@ -29,11 +36,11 @@ export function CatalogProvider({ children, getProducts }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getProducts]);
 
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [loadProducts]);
 
   const value = useMemo(() => {
     return {
@@ -42,7 +49,7 @@ export function CatalogProvider({ children, getProducts }) {
       error,
       loadProducts,
     };
-  }, [products, isLoading, error]);
+  }, [products, isLoading, error, loadProducts]);
 
   return (
     <CatalogContext.Provider value={value}>{children}</CatalogContext.Provider>

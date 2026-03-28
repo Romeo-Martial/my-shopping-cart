@@ -5,15 +5,15 @@ import { Money } from "../../cart/domain/valueObjects/money";
 export class OrderLine {
   constructor({ sku, quantity, unitPrice }) {
     if (!(sku instanceof Sku)) {
-      throw new Error("sku must be Sku");
+      throw new Error("sku must be of type Sku");
     }
 
     if (!(quantity instanceof Quantity)) {
-      throw new Error("quantity must be Quantity");
+      throw new Error("quantity must be of type Quantity");
     }
 
     if (!(unitPrice instanceof Money)) {
-      throw new Error("unitPrice must be Money");
+      throw new Error("unitPrice must be of type Money");
     }
 
     this.sku = sku;

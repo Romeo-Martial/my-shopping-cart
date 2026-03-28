@@ -33,8 +33,8 @@ export class CreateOrderFromCheckout {
         return Result.failure(
           new DomainError(
             "CHECKOUT_NOT_READY",
-            "Checkout is not ready to create an order",
-          ),
+            "Checkout is not ready to create an order"
+          )
         );
       }
 
@@ -58,7 +58,10 @@ export class CreateOrderFromCheckout {
       return Result.success(order);
     } catch (err) {
       return Result.failure(
-        new DomainError("CREATE_ORDER_FROM_CHECKOUT_FAILED", err.message),
+        new DomainError(
+          "CREATE_ORDER_FROM_CHECKOUT_FAILED",
+          err.message
+        )
       );
     }
   }

@@ -1,0 +1,124 @@
+.checkout-page {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.checkout-page__header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.checkout-page__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.checkout-page__summary {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.checkout-page__summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.checkout-page__summary-label {
+  color: var(--color-text-muted);
+}
+
+.checkout-page__summary-value {
+  font-weight: var(--font-weight-semibold);
+}
+
+.checkout-page__empty {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.checkout-page__section-title {
+  margin: 0;
+  font-size: var(--font-size-300);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.35;
+}
+
+.checkout-page__form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.checkout-page__field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.checkout-page__label {
+  font-weight: var(--font-weight-semibold);
+}
+
+.checkout-page__input,
+.checkout-page__select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding-inline: 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.checkout-page__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.checkout-page__input:focus,
+.checkout-page__select:focus {
+  border-color: #94b8ff;
+}
+
+.checkout-page__input:focus-visible,
+.checkout-page__select:focus-visible {
+  outline: 3px solid rgba(29, 78, 216, 0.2);
+  outline-offset: 2px;
+}
+
+.checkout-page__status-details {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.checkout-page__status-line {
+  margin: 0;
+}
+
+@media (min-width: 56rem) {
+  .checkout-page__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .checkout-page__main {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .checkout-page__sidebar {
+    display: grid;
+    gap: var(--space-5);
+    position: sticky;
+    top: var(--space-5);
+  }
+}

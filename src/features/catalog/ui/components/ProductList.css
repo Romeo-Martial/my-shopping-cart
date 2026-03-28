@@ -1,0 +1,31 @@
+.product-list {
+  /* Mobile-first: Single column */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-mobile-4);
+  max-width: 100%;
+}
+
+/* Small tablets: 2 columns */
+@media (min-width: 30rem) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+/* Tablets: 2-3 columns based on available space */
+@media (min-width: 48rem) {
+  .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-5);
+  }
+}
+
+/* Large screens: Max 4 columns */
+@media (min-width: 80rem) {
+  .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-6);
+  }
+}

@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 
 const CartContext = createContext(null);
 
@@ -28,59 +34,71 @@ export function CartProvider({
     initialCartResult.isFailure() ? initialCartResult.error : null,
   );
 
+  const addItem = useCallback(
+    ({ sku, quantity, unitPriceAmount, currency }) => {
+      const result = addItemToCart.execute({
+        sku,
+        quantity,
+        unitPriceAmount,
+        currency,
+      });
+
+      if (result.isFailure()) {
+        setError(result.error);
+        return result;
+      }
+
+      setError(null);
+      setCart(result.value);
+      return result;
+    },
+    [addItemToCart],
+  );
+
+  const removeItem = useCallback(
+    ({ sku }) => {
+      const result = removeItemFromCart.execute({ sku });
+
+      if (result.isFailure()) {
+        setError(result.error);
+        return result;
+      }
+
+      setError(null);
+      setCart(result.value);
+      return result;
+    },
+    [removeItemFromCart],
+  );
+
+  const changeQuantity = useCallback(
+    ({ sku, quantity }) => {
+      const result = changeItemQuantity.execute({
+        sku,
+        quantity,
+      });
+
+      if (result.isFailure()) {
+        setError(result.error);
+        return result;
+      }
+
+      setError(null);
+      setCart(result.value);
+      return result;
+    },
+    [changeItemQuantity],
+  );
+
   const value = useMemo(() => {
     return {
       cart,
       error,
-
-      addItem: ({ sku, quantity, unitPriceAmount, currency }) => {
-        const result = addItemToCart.execute({
-          sku,
-          quantity,
-          unitPriceAmount,
-          currency,
-        });
-
-        if (result.isFailure()) {
-          setError(result.error);
-          return result;
-        }
-
-        setError(null);
-        setCart(result.value);
-        return result;
-      },
-
-      removeItem: ({ sku }) => {
-        const result = removeItemFromCart.execute({ sku });
-
-        if (result.isFailure()) {
-          setError(result.error);
-          return result;
-        }
-
-        setError(null);
-        setCart(result.value);
-        return result;
-      },
-
-      changeQuantity: ({ sku, quantity }) => {
-        const result = changeItemQuantity.execute({
-          sku,
-          quantity,
-        });
-
-        if (result.isFailure()) {
-          setError(result.error);
-          return result;
-        }
-
-        setError(null);
-        setCart(result.value);
-        return result;
-      },
+      addItem,
+      removeItem,
+      changeQuantity,
     };
-  }, [cart, error, addItemToCart, removeItemFromCart, changeItemQuantity]);
+  }, [cart, error, addItem, removeItem, changeQuantity]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
